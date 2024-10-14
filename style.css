@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'Calibri';
+  src: url('./fonts/calibri.ttf');
+}
+
+@font-face {
+  font-family: 'Tahoma';
+  src: url('./fonts/tahoma.ttf');
+}
+
+body {
+  font-family: 'Calibri', 'Tahoma', Arial, Helvetica, sans-serif;
+  --selection-background: hsl(220, 100%, 50%);
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  color: #00aaff;
+  font-family: 'Tahoma';
+}
+
+.title {
+  font-size: 48px;
+}
+
+#input{
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 2px;
+  display: flex;
+}
+
+.prism-live:not(.donotfill){
+  width: -webkit-fill-available;
+}
+
+button {
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+button:disabled {
+  background-color: buttonface;
+}
+
+button:not(:disabled) {
+  background-color: #0080ff;
+  border: 2px solid;
+}
+
+button:active {
+  background-color: #0060c0;
+  border: 2px solid;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background-color: #0000001c;
+  width: -webkit-fill-available;
+  padding: 15px;
+}
