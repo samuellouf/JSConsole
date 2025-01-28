@@ -1,13 +1,3 @@
-@font-face {
-  font-family: 'Calibri';
-  src: url('./fonts/calibri.ttf');
-}
-
-@font-face {
-  font-family: 'Tahoma';
-  src: url('./fonts/tahoma.ttf');
-}
-
 body {
   font-family: 'Calibri', 'Tahoma', Arial, Helvetica, sans-serif;
   --selection-background: hsl(220, 100%, 50%);
@@ -23,6 +13,15 @@ body {
   font-family: 'Tahoma';
 }
 
+.logo::before {
+  content: '>';
+  font-weight: bold;
+}
+
+#input .logo{
+  transform: translateY(5px);
+}
+
 .title {
   font-size: 48px;
 }
@@ -32,6 +31,36 @@ body {
   border-radius: 10px;
   padding: 2px;
   display: flex;
+}
+
+#console .response{
+  text-shadow: 0 1px white;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 1em;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.5;
+}
+
+#console pre::before{
+  font-weight: bold;
+  color: #00aaff;
+  font-family: 'Tahoma';
+}
+
+#console .response pre::before{
+  content: '↪';
+}
+
+#console pre::before{
+  content: '>';
+}
+
+#console #input pre::before{
+  content: '';
 }
 
 .prism-live:not(.donotfill){

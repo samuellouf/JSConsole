@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Console</title>
-    <link rel="stylesheet" href="./prism.css">
-    <link rel="stylesheet" href="./prism-live.css">
-    <link rel="stylesheet" href="./prism-line-numbers.css">
+    <link rel="stylesheet" href="./prism/prism.css">
+    <link rel="stylesheet" href="./prism/prism-live.css">
+    <link rel="stylesheet" href="./prism/prism-line-numbers.css">
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <header>
       <div class="banner">
-        <h1 class="logo title">></h1>
+        <h1 class="logo title"></h1>
         <h1 class="title">JS Console</h1>
       </div>
       <span>version : <span class="version">unknown</span></span>
@@ -20,7 +20,7 @@
     </header>
     <section id="console">
       <div id="input">
-        <span class="logo"><b>></b></span>
+        <span class="logo"></span>
         <textarea class="prism-live language-js"></textarea>
       </div>
     </section>
@@ -28,8 +28,8 @@
     <footer>
       <button onclick="execute();">Execute JS</button>
     </footer>
-    <script src="./prism.js"></script>
-    <script src="./prism-line-numbers.js"></script>
+    <script src="./prism/prism.js"></script>
+    <script src="./prism/prism-line-numbers.js"></script>
     <script src="https://live.prismjs.com/src/prism-live.js?load=markup,css,javascript"></script>
     <script src="./script.js"></script>
   </body>
