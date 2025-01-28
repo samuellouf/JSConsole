@@ -1,4 +1,4 @@
-let version = '1.0';
+let version = '1.1';
 
 let console = document.getElementById('console');
 let textarea_div = document.getElementById('input');
