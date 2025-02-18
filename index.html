@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./prism/prism.css">
     <link rel="stylesheet" href="./prism/prism-live.css">
     <link rel="stylesheet" href="./prism/prism-line-numbers.css">
+    <link rel="stylesheet" href="./fonts.css">
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
@@ -17,9 +18,27 @@
       </div>
       <span>version : <span class="version">unknown</span></span>
       <hr>
+      <button title="Settings" onclick="showSettings();"><i class="settings">Settings</i></button>
+      <hr>
     </header>
+    <section id="settings">
+      <i class="close" onclick="hideSettings();">X</i>
+      <div class="settings">
+        <h1>Change font</h1>
+        <h2>family :</h2>
+        <select id="fontSelection">
+          <option value="Consolas">Consolas</option>
+          <option value="Ubuntu Mono">Ubuntu Mono</option>
+          <option value="Tahoma">Tahoma</option>
+          <option value="Calibri">Calibri</option>
+          <option value="Arial">Arial</option>
+        </select>
+        <h2>size :</h2>
+        <input type="number" value="16" id="fontSize">
+      </div>
+    </section>
     <section id="console">
-      <div id="input">
+      <div id="input" class="nologo">
         <span class="logo"></span>
         <textarea class="prism-live language-js"></textarea>
       </div>
@@ -28,7 +47,6 @@
     <footer>
       <button onclick="execute();">Execute JS</button>
     </footer>
-    <script src="https://samuellouf.github.io/queryCreator/queryCreator.js"></script>
     <script src="./prism/prism.js"></script>
     <script src="./prism/prism-line-numbers.js"></script>
     <script src="https://live.prismjs.com/src/prism-live.js?load=markup,css,javascript"></script>

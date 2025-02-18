@@ -1,4 +1,4 @@
-let version = '1.2';
+let version = '1.3';
 
 const sleep = (ms) => { return new Promise((resolve) => { setTimeout(resolve, ms); });};
 const isClass = (element) => {
@@ -13,8 +13,33 @@ const isClass = (element) => {
   }
 }
 
+const stringifyResult = (result) => {
+  var language = 'javascript';
+  if (typeof result == 'string'){
+    result = stringify(result);
+  } else if (typeof result == 'function'){
+    if (isClass(result)){
+      result = ('ƒ ' + result).replace('ƒ function ', 'ƒ class ');
+    } else {
+      result = 'ƒ ' + result;
+    }
+  } else if (typeof result == 'object'){
+    if (isHTMLElement(result)){
+      language = 'html';
+      result = result.outerHTML;
+    } else {
+      if (result instanceof Promise){
+        result = 'Promise {<pending>}';
+      } else {
+        result = JSON.stringify(result);
+      }
+    }
+  }
+  return {result: String(result), language: language || 'javascript'}
+}
+
 const isHTMLElement = (element) => {
-  return !!window['HTML' + element.name + 'Element'] || !!element.outerHTML
+  return element instanceof Node;
 }
 
 // `<pre><code class="language-css">p { color: red }</code></pre>`
@@ -50,31 +75,11 @@ async function execute(){
     scrollTo(0, window.outerHeight);
     await sleep(1);
     const executeCode = async (code) => {
-      const stringifyResult = (result) => {
-        var language = 'javascript';
-        if (typeof result == 'string'){
-          result = stringify(result);
-        } else if (typeof result == 'function'){
-          if (isClass(result)){
-            result = ('ƒ ' + result).replace('ƒ function ', 'ƒ class ');
-          } else {
-            result = 'ƒ ' + result;
-          }
-        } else if (typeof result == 'object'){
-          if (isHTMLElement(result)){
-            language = 'html';
-            result = result.outerHTML;
-          } else {
-            if (result instanceof Promise){
-              result = 'Promise {<pending>}';
-            } else {
-              result = JSON.stringify(result);
-            }
-          }
-        } original_console.log(result)
-        return {result: String(result), language: language || 'javascript'}
+      try {
+        var result = eval(code);
+      } catch (error) {
+        console.error(String(error));
       }
-      var result = eval(code);
       var sr;
       let response_div = document.createElement('div');
       response_div.classList.add('response');
@@ -114,6 +119,67 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('span.version').innerText = version;
   window.original_console = console;
   window.console = document.getElementById('console');
+  console.clear = () => {
+    while (console.firstElementChild.id != 'input'){
+      console.firstElementChild.remove();
+    }
+  }
+
+  const log = (do_ = null, ...data) => {
+    let pre = document.createElement('pre');
+    pre.classList.add('nologo');
+    pre.classList.add('signleline');
+    if (do_) pre.classList.add(do_);
+    if (data.length == 1){
+      if (typeof data[0] == 'string'){
+        pre.classList.add('language-none');
+        pre.innerText = data[0];
+      } else {
+        var sr = stringifyResult(data[0]);
+        pre.classList.add('language-' + sr.language);
+        pre.innerText = sr.result;
+        Prism.highlightElement(pre);
+      }
+    } else {
+      for (var element of data){
+        let pre_ = document.createElement('pre');
+        if (typeof element == 'string'){
+          pre_.classList.add('language-none');
+          pre_.innerText = element;
+        } else {
+          var sr = stringifyResult(element);
+          pre_.classList.add('language-' + sr.language);
+          pre_.innerText = sr.result;
+          Prism.highlightElement(pre_);
+        }
+        pre.appendChild(pre_);
+      }
+    }
+    console.appendChild(pre);
+    console.appendChild(textarea_div);
+    original_console[do_](...data);
+  }
+
+  console.log = (...data) => log('log', ...data);
+  console.warn = (...data) => log('warn', ...data);
+  console.error = (...data) => log('error', ...data);
+  
   window.textarea_div = document.getElementById('input');
   window.textarea = document.querySelector('#input textarea');
-})
+});
+
+document.getElementById('fontSelection').addEventListener('change', (event) => {
+  document.body.style.setProperty('--console-font', event.target.value);
+});
+
+document.querySelector('#fontSize').addEventListener('change', (event) => {
+  document.body.style.setProperty('--console-font-size', event.target.value + 'px');
+});
+
+function showSettings(){
+  document.getElementById('settings').classList.add('visible');
+}
+
+function hideSettings(){
+  document.getElementById('settings').classList.remove('visible');
+}

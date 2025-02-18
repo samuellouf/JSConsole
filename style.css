@@ -1,6 +1,8 @@
 body {
   font-family: 'Calibri', 'Tahoma', Arial, Helvetica, sans-serif;
   --selection-background: hsl(220, 100%, 50%);
+  --console-font: 'Consolas';
+  --console-font-size: 16px;
 }
 
 .banner {
@@ -26,11 +28,37 @@ body {
   font-size: 48px;
 }
 
+.signleline {
+  display: flex !important;
+}
+
 #input{
   border: 2px solid black;
   border-radius: 10px;
   padding: 2px;
   display: flex;
+}
+
+#settings{
+  position: absolute;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  top: 0;
+  left: 0;
+  background-color: #000000cc;
+  padding: 50px;
+  z-index: 10;
+  color: white;
+}
+
+#settings:not(.visible){
+  display: none;
+}
+
+#settings i.close{
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
 }
 
 #console .response{
@@ -51,20 +79,54 @@ body {
   font-family: 'Tahoma';
 }
 
-#console .response pre::before{
-  content: '↪';
-}
-
-#console pre::before{
+#console pre:not(.nologo)::before, :not(#console #input pre::before){
   content: '>';
 }
 
-#console #input pre::before{
-  content: '';
+#console .response pre:not(.nologo)::before{
+  content: '↪';
+}
+
+#console pre.warn::before{
+  content: '⚠️';
+}
+
+#console pre.warn{
+  background-color: #ffffa1;
+}
+
+#console pre.error::before{
+  content: '❌';
+}
+
+#console pre.error{
+  background-color: #ffbbbb;
+}
+
+code[class*="language-"], pre[class*="language-"]{
+  font-family: var(--console-font);
+}
+
+div.prism-live{
+  font-family: var(--console-font) !important;
+  font-size: var(--console-font-size) !important;
+  font: var(--console-font-size) var(--console-font) !important;
+}
+
+div.prism-live pre{
+  font-family: var(--console-font) !important;
+  font-size: var(--console-font-size) !important;
+  font: var(--console-font-size) var(--console-font) !important;
 }
 
 .prism-live:not(.donotfill){
   width: -webkit-fill-available;
+}
+
+div.prism-live textarea{
+  font-family: var(--console-font) !important;
+  font-size: var(--console-font-size) !important;
+  font: var(--console-font-size) var(--console-font) !important;
 }
 
 button {
